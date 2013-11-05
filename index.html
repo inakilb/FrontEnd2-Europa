@@ -238,5 +238,27 @@
 				</span>
 			</h3>
 		</footer>
+		<script type="text/javascript">
+			function darBienvenida() {
+				alert('Bienvenido');
+			}
+
+			function hacerAlgoImportante() {
+				console.log('Estoy haciendo algo importante para la aplicacion');
+			}
+
+			function atachar(elem, evento, funcion) {
+				if(elem.addEventListener) {
+					elem.addEventListener(evento, funcion);
+				} else {
+					elem.attachEvent('on'+evento, funcion);
+				}
+			}
+
+			atachar(window, 'load', hacerAlgoImportante);
+
+			var publicar = document.getElementsByClassName('publicar')[0];
+			atachar(publicar, 'click', darBienvenida);
+		</script>
 	</body>
 </html>
