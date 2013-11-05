@@ -25,6 +25,11 @@
 						Publicar
 					</a>
 				</div>
+				<div>
+					<a href="#12" class="sizer">A</a>
+					<a href="#16" class="sizer">A</a>
+					<a href="#22" class="sizer">A</a>
+				</div>
 			</div>
 			<div class="usuario">
 				<figure class="avatar">
@@ -48,10 +53,11 @@
 			</ul>
 		</nav>
 		<form action="">
-			<p><label for="titulo">Título</label><input name="titulo" type="text"></p>
-			<p><label for="autor">Autor</label><input name="autor" type="text"></p>
-			<p><label for="tag">Tag</label><input name="tag" type="text"></p>
-			<p><label for="imagen">Imagen</label><input name="imagen" type="file"></p>
+			<p><label for="titulo">Título</label><input name="titulo" type="text" /></p>
+			<p><label for="autor">Autor</label><input name="autor" type="text" /></p>
+			<p><label for="tag">Tag</label><input name="tag" type="text" /></p>
+			<p><label for="imagen">Imagen</label><input name="imagen" type="file" /></p>
+			<input type="submit" value="Publicar" />
 		</form>
 		<section class="posts">
 			<article class="post">
@@ -73,7 +79,7 @@
 				<div class="acciones">
 					<div class="votos">
 						<a href="#" class="up"></a>
-						<span class="total">156</span>
+						<span class="total">12</span>
 						<a href="#" class="down"></a>
 					</div>
 					<div class="datos">
@@ -103,7 +109,7 @@
 				<div class="acciones">
 					<div class="votos">
 						<a href="#" class="up"></a>
-						<span class="total">156</span>
+						<span class="total">23</span>
 						<a href="#" class="down"></a>
 					</div>
 					<div class="datos">
@@ -133,7 +139,7 @@
 				<div class="acciones">
 					<div class="votos">
 						<a href="#" class="up"></a>
-						<span class="total">156</span>
+						<span class="total">44</span>
 						<a href="#" class="down"></a>
 					</div>
 					<div class="datos">
@@ -163,7 +169,7 @@
 				<div class="acciones">
 					<div class="votos">
 						<a href="#" class="up"></a>
-						<span class="total">156</span>
+						<span class="total">55</span>
 						<a href="#" class="down"></a>
 					</div>
 					<div class="datos">
@@ -246,35 +252,92 @@
 			</h3>
 		</footer>
 		<script type="text/javascript">
-			function darBienvenida() {
-				alert('Bienvenido');
-			}
-
-			function hacerAlgoImportante() {
-				console.log('Estoy haciendo algo importante para la aplicacion');
-			}
-
-			function atachar(elem, evento, funcion) {
-				if(elem.addEventListener) {
-					elem.addEventListener(evento, funcion);
-				} else {
-					elem.attachEvent('on'+evento, funcion);
+			$(function() {
+				function crearSizer(pixels) {
+					return function() {
+						$('body').css('font-size', pixels+'px');
+					}
 				}
-			}
-/*
-			atachar(window, 'load', hacerAlgoImportante);
 
-			var publicar = document.getElementsByClassName('publicar')[0];
-			atachar(publicar, 'click', darBienvenida);
-*/
-			$('.publicar').on('click', function() {
-				alert('Hola!');
+				$('.sizer').each(function(i, link) {
+					var pixels = $(link).prop('hash').substring(1);
+					$(link)
+						.css('font-size', pixels+'px')
+						.on('click', crearSizer(pixels));
+				});
+
+				function mostrarForm() {
+					$('form').slideToggle();
+				}
+
+				$('.publicar').on('click', mostrarForm);
+
+				function procesarForm(e) {
+					e.preventDefault();
+					var titulo = $('input[name=titulo]').val();
+					var autor = $('input[name=autor]').val();
+					var tag = $('input[name=tag]').val();
+					//var imagen = $('input[name=imagen]').val();
+					
+					$('section.posts').prepend('<article class="post">\
+				<div class="descripcion">\
+					<figure class="imagen">\
+						<img src="imagenes/foto.jpg" />\
+					</figure>\
+					<div class="detalles">\
+						<h2 class="titulo">\
+							'+titulo+'\
+						</h2>\
+						<p class="autor">\
+							por <a href="#">'+autor+'</a>\
+						</p>\
+						<a href="" class="tag">'+tag+'</a>\
+						<p class="fecha">hace <strong>0</strong> min</p>\
+					</div>\
+				</div>\
+				<div class="acciones">\
+					<div class="votos">\
+						<a href="#" class="up"></a>\
+						<span class="total">0</span>\
+						<a href="#" class="down"></a>\
+					</div>\
+					<div class="datos">\
+						<a href="#" class="comentarios">\
+							0\
+						</a>\
+						<a href="#" class="estrellita"></a>\
+					</div>\
+				</div>\
+			</article>');
+					$('form input[type=text]').val('');
+					$('form').slideUp();
+				}
+
+				$('form').on('submit', procesarForm);
+
+				function crearContador(inicio) {
+					var contador = inicio;
+					return {
+						up : function() {
+							return ++contador;
+						},
+						down : function() {
+							return --contador;
+						}
+					};
+				};
+
+				$('span.total').each(function(i, elem) {
+					var contador = crearContador($(elem).html());
+					$(elem)
+						.siblings('.up').on('click', function() {
+							$(elem).html(contador.up());
+						})
+						.siblings('.down').on('click', function() {
+							$(elem).html(contador.down());
+						});
+				});
 			});
-			$('.publicar').on('click', darBienvenida);
-			$(hacerAlgoImportante);
-			//$(window).on('load', hacerAlgoImportante);
-
-			$('.publicar').off('click', darBienvenida);
 		</script>
 	</body>
 </html>
