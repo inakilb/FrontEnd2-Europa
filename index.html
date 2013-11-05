@@ -6,6 +6,7 @@
 	<title>Puls4: Comunidad para gente atractiva y millonaria</title>
 	<link rel="stylesheet" href="css/normalize.css" />
 	<link rel="stylesheet" href="css/puls4.css" />
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 </head>
 	<body>
 		<header>
@@ -46,6 +47,12 @@
 				<li><a href="#">CSS3</a></li>
 			</ul>
 		</nav>
+		<form action="">
+			<p><label for="titulo">Título</label><input name="titulo" type="text"></p>
+			<p><label for="autor">Autor</label><input name="autor" type="text"></p>
+			<p><label for="tag">Tag</label><input name="tag" type="text"></p>
+			<p><label for="imagen">Imagen</label><input name="imagen" type="file"></p>
+		</form>
 		<section class="posts">
 			<article class="post">
 				<div class="descripcion">
@@ -254,11 +261,20 @@
 					elem.attachEvent('on'+evento, funcion);
 				}
 			}
-
+/*
 			atachar(window, 'load', hacerAlgoImportante);
 
 			var publicar = document.getElementsByClassName('publicar')[0];
 			atachar(publicar, 'click', darBienvenida);
+*/
+			$('.publicar').on('click', function() {
+				alert('Hola!');
+			});
+			$('.publicar').on('click', darBienvenida);
+			$(hacerAlgoImportante);
+			//$(window).on('load', hacerAlgoImportante);
+
+			$('.publicar').off('click', darBienvenida);
 		</script>
 	</body>
 </html>
